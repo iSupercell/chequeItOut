@@ -6,9 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cheque It Out!</title>
 
+    <!-- Icon Kit HERE -->
+    <script src="https://kit.fontawesome.com/6d162e65a0.js" crossorigin="anonymous"></script>
+
+    <!-- External Style Sheet HERE -->
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+    <header>
+        <h1>Cheque It Out!</h1>
+        <h2>A number to word converter</h2>
+    </header>
+    <main>
+        <form action="#" method="#" class="converter" name="converter">
+            <label for="numberInput" class="sr-only">Enter a number you wish to convert into text.</label>
+            <input type="text" id="numberInput" name="numberInput" placeholder="Enter your number">
+            <button type="submit">Convert</button>
+        </form>
+        <div class="convertedNum">
+            <p><!-- The result of the conversion will appear here --></p>
+        </div>
+    </main>
+    <footer>
+        <p>
+            Developed by Si-Jia Mao • 
+            <a href="https://github.com/iSupercell" target="_blank" rel="noopener noreferrer" aria-label="Github">
+                <i class="fab fa-github-square" aria-hidden="true"></i>
+                <span class="sr-only">opens in a new tab</span>
+            </a>
+            <a href="https://www.linkedin.com/in/sijia-mao" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                <span class="sr-only">opens in a new tab</span>
+            </a>
+            <a href="https://sijiamao.dev/" target="_blank" rel="noopener noreferrer" aria-label="Portfolio">
+                <i class="fas fa-globe" aria-hidden="true"></i>
+                <span class="sr-only">opens in a new tab</span>
+            </a>
+        </p>
+    </footer>
     <script src="./scripts.js"></script>
 </body>
 </html>
