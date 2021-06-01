@@ -19,7 +19,6 @@ chequeApp.init = () => {
     chequeApp.submit.addEventListener('click', (e) => {
         e.preventDefault();
         chequeApp.input = document.getElementById('numberInput').value;
-        console.log(chequeApp.input);
         chequeApp.numConverter();
     });
 };
@@ -40,27 +39,51 @@ chequeApp.numConverter = () => {
     const storeInArray = Array.from(chequeApp.input);
     console.log(storeInArray);
     
-    // When input number is between 20 and 99
-    if (chequeApp.input < 20) return chequeApp.numberText.textContent = chequeApp.smallDigits[chequeApp.input];
-    if (chequeApp.input >= 20 && chequeApp.input < 100) return chequeApp.numberText.textContent = `${chequeApp.tyDigits[storeInArray[0]]}-${chequeApp.smallDigits[storeInArray[1]]}`;
+    // When input number is below 100
+    const convertSmall = (number) => {
+        if (storeInArray[storeInArray.length - 2] == 0 && storeInArray[storeInArray.length - 1] != 0) return chequeApp.numberText.textContent = chequeApp.smallDigits[storeInArray[storeInArray.length - 1]];
+        if (number < 20) return chequeApp.numberText.textContent = chequeApp.smallDigits[number];
+        if (storeInArray[storeInArray.length - 2] > 1 && storeInArray[storeInArray.length - 1] == 0) return chequeApp.numberText.textContent = chequeApp.tyDigits[storeInArray[storeInArray.length - 2]];
+        if (number < 100) return chequeApp.numberText.textContent = `${chequeApp.tyDigits[storeInArray[storeInArray.length - 2]]}-${chequeApp.smallDigits[storeInArray[storeInArray.length - 1]]}`;
+    };
+    convertSmall(chequeApp.input);
 
     // When input number is in the hundreds
-    const hundred = () => {
-        if (numAmount === 3) {
-            const getIndex = storeInArray[0];
-            const hundredNum = `${chequeApp.smallDigits[getIndex]} ${chequeApp.bigDigits[0]}`;
-            if (storeInArray[1] == 1) {
-                return chequeApp.numberText.textContent = `${hundredNum} ${chequeApp.smallDigits[chequeApp.input]}`;
-            } else {
-                const middleNum = chequeApp.tyDigits[storeInArray[1]];
-                return chequeApp.numberText.textContent = `${hundredNum} ${middleNum}-${chequeApp.smallDigits[storeInArray[2]]}`
-            };
+    if (numAmount === 3) {
+        const bundle = storeInArray[1] + storeInArray[2];
+        const hundredNum = `${chequeApp.smallDigits[storeInArray[0]]} ${chequeApp.bigDigits[0]}`;
+
+        if (bundle == 0) {
+            return chequeApp.numberText.textContent = hundredNum;
+        } else {
+            return chequeApp.numberText.textContent = hundredNum + ' ' + convertSmall(bundle);
         };
-    }
-    hundred();
+    };
 
     // When the input number is in the thousands
-    // if (numAmount === 4)
+    if (numAmount === 4) {
+        const smallBundle = storeInArray[storeInArray.length - 2] + storeInArray[storeInArray.length - 1];
+        const smallHundredNum = `${chequeApp.smallDigits[storeInArray[storeInArray.length - 3]]} ${chequeApp.bigDigits[0]}`;
+        const thousandNum = `${chequeApp.smallDigits[storeInArray[0]]} ${chequeApp.bigDigits[1]}`;
+
+        if (smallBundle == 0) {
+            return chequeApp.numberText.textContent = thousandNum;
+        } else if (storeInArray[storeInArray.length - 3] == 0) {
+            return chequeApp.numberText.textContent = thousandNum + ' ' + convertSmall(smallBundle);
+        } else {
+            return chequeApp.numberText.textContent = thousandNum + ' ' + smallHundredNum + ' ' + convertSmall(smallBundle);
+        };
+    };
+
+    if (numAmount === 6) {
+        const largeBundle = storeInArray[storeInArray.length - 5] + storeInArray[storeInArray.length - 4];
+        const largeHundredNum = `${chequeApp.smallDigits[storeInArray[0]]} ${chequeApp.bigDigits[0]}`;
+        if (largeBundle == 0) {
+            return chequeApp.numberText.textContent = largeHundredNum + ' ' + chequeApp.bigDigits[1];
+        } else {
+            return chequeApp.numberText.textContent = largeHundredNum + ' ' + convertSmall(largeBundle) + ' ' + chequeApp.bigDigits[1];
+        }
+    }
 };
 
 chequeApp.init();
